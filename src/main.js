@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueSocketIO from 'vue-socket.io';
-import SocketIO from 'vue-socket.io';
+import SocketIO from 'socket.io-client';
 import App from './App.vue';
 
 Vue.config.productionTip = false;

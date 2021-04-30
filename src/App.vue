@@ -1,19 +1,44 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div>
+      <p>Messages</p>
+      <textarea disabled :value="messages"></textarea>
+    </div>
+    <div>
+      <input v-model="message" @keyup.enter="sendMessage()" />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  data() {
+    return {
+      message: '',
+      messages: '',
+    };
+  },
+
+  sockets: {
+    connect: function() {},
+    chat: function(data) {
+      this.messages += data.message + '\n';
+    },
+  },
+
+  methods: {
+    sendMessage() {
+      this.$socket.emit('chat', {
+        message: this.message,
+      });
+
+      this.messages += this.message + '\n';
+      this.message = '';
+    },
+  },
+  components: {},
+};
 </script>
 
 <style>
